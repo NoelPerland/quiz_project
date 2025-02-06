@@ -2,16 +2,18 @@ import { RiAdminFill } from "react-icons/ri";
 
 export default function Navbar() {
   return (
-    <nav className="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center fixed top-0 left-0 right-0">
-      <h2 className="text-2xl font-bold text-blue-600">Quix</h2>
-      <div className="flex items-center space-x-6">
-        <a href="/" className="text-gray-700 hover:text-blue-600 transition">
+    <nav className="navbar  shadow-md fixed top-0 left-0 right-0 px-6">
+      <div className="navbar-start">
+        <h2 className="text-2xl font-bold">Quix</h2>
+      </div>
+      <div className="navbar-end space-x-6">
+        <a href="/" className="btn btn-ghost">
           Home
         </a>
-        <a href="/quiz" className="text-gray-700 hover:text-blue-600 transition">
+        <a href="/quiz" className="btn btn-ghost">
           Quizzes
         </a>
-        <a href="/" className="text-gray-700 hover:text-blue-600 transition flex items-center">
+        <a href="/admin" className="btn btn-ghost flex items-center">
           <RiAdminFill className="w-6 h-6" />
         </a>
       </div>

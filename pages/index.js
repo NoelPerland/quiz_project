@@ -3,19 +3,19 @@ import Navbar from "./Navbar"; // Import Navbar
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6">
       <Navbar /> {/* Use Navbar here */}
       {/* Hero Section */}
       <section className="text-center max-w-3xl mt-20">
-        <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl">
-          Test Your Knowledge with <span className="text-blue-600">Quix</span>
+        <h1 className="text-4xl font-bold  sm:text-5xl">
+          Test Your Knowledge with <span>Quix</span>
         </h1>
-        <p className="mt-4 text-lg text-gray-600">
+        <p className="mt-4 text-lg ">
           Challenge yourself with fun and interactive quizzes. Learn, compete,
           and improve your skills.
         </p>
         <Link href="/quiz">
-          <button className="mt-6 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition">
+          <button className="btn btn-primary mt-6 px-6 py-3  font-semibold rounded-lg shadow-md  transition">
             Start Quiz
           </button>
         </Link>
@@ -41,9 +41,11 @@ export default function Home() {
 
 function FeatureCard({ title, desc }) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md text-center">
-      <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
-      <p className="mt-2 text-gray-600">{desc}</p>
+    <div className="card bg-base-300 shadow-xl">
+      <div className="card-body text-center">
+        <h3 className="card-title text-xl font-semibold">{title}</h3>
+        <p className="mt-2">{desc}</p>
+      </div>
     </div>
   );
 }
