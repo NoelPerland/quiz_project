@@ -7,15 +7,17 @@ export default function AdminPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { questions, addQuestion, updateQuestion, deleteQuestion } =
-    useContext(QuizContext);
+  const { questions, addQuestion, deleteQuestion } = useContext(QuizContext);
 
-  const [answerInput, setAnswerInput] = useState("");
   const [questionForm, setQuestionForm] = useState({
     id: "",
     title: "",
     question: "",
-    answers: [],
+    answers: [
+      { title: "", correct: false },
+      { title: "", correct: false },
+      { title: "", correct: false },
+    ],
   });
 
   function handleLogin() {
@@ -37,53 +39,42 @@ export default function AdminPage() {
     setQuestionForm((prev) => ({ ...prev, [name]: value }));
   }
 
+  function handleAnswerChange(index, value) {
+    setQuestionForm((prev) => {
+      const newAnswers = [...prev.answers];
+      newAnswers[index].title = value;
+      return { ...prev, answers: newAnswers };
+    });
+  }
+
+  function handleCorrectAnswer(index) {
+    setQuestionForm((prev) => {
+      const newAnswers = prev.answers.map((answer, i) => ({
+        ...answer,
+        correct: i === index,
+      }));
+      return { ...prev, answers: newAnswers };
+    });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-
-    if (questionForm.id) {
-      updateQuestion(questionForm);
-    } else {
-      const newQuestion = { ...questionForm, id: Date.now().toString() };
-      addQuestion(newQuestion);
-    }
-
+    const newQuestion = { ...questionForm, id: Date.now().toString() };
+    addQuestion(newQuestion);
     setQuestionForm({
       id: "",
       title: "",
       question: "",
-      answers: [],
+      answers: [
+        { title: "", correct: false },
+        { title: "", correct: false },
+        { title: "", correct: false },
+      ],
     });
-  }
-
-  function handleEdit(question) {
-    setQuestionForm(question);
   }
 
   function handleDelete(id) {
     deleteQuestion(id);
-  }
-
-  function addAnswerToQuestion() {
-    const trimmedAnswer = answerInput.trim();
-    if (trimmedAnswer !== "") {
-      setQuestionForm({
-        ...questionForm,
-        answers: [
-          ...questionForm.answers,
-          { title: trimmedAnswer, correct: false },
-        ],
-      });
-      setAnswerInput("");
-    }
-  }
-
-  function removeAnswerFromQuestion(answerToRemove) {
-    setQuestionForm({
-      ...questionForm,
-      answers: questionForm.answers.filter(
-        (answer) => answer.title !== answerToRemove.title
-      ),
-    });
   }
 
   if (!loggedIn) {
@@ -117,6 +108,7 @@ export default function AdminPage() {
       </div>
     );
   }
+
   return (
     <>
       <Navbar />
@@ -147,8 +139,32 @@ export default function AdminPage() {
             ></textarea>
           </div>
 
+          <div className="form-control mb-4">
+            <label className="label">Answers</label>
+            {questionForm.answers.map((answer, index) => (
+              <div key={index} className="flex gap-2 items-center mb-2">
+                <input
+                  type="text"
+                  value={answer.title}
+                  onChange={(e) => handleAnswerChange(index, e.target.value)}
+                  className="input input-bordered flex-1"
+                  placeholder={`Answer ${index + 1}`}
+                  required
+                />
+                <input
+                  type="radio"
+                  name="correctAnswer"
+                  checked={answer.correct}
+                  onChange={() => handleCorrectAnswer(index)}
+                  className="radio"
+                />
+                <span>Correct</span>
+              </div>
+            ))}
+          </div>
+
           <button type="submit" className="btn btn-primary w-full">
-            {questionForm.id ? "Update Question" : "Add Question"}
+            Add Question
           </button>
         </form>
 
@@ -158,13 +174,14 @@ export default function AdminPage() {
               <tr>
                 <th>Title</th>
                 <th>Question</th>
+                <th>Answers</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {questions.length === 0 ? (
                 <tr>
-                  <td colSpan="3" className="text-center">
+                  <td colSpan="4" className="text-center">
                     No questions available.
                   </td>
                 </tr>
@@ -174,12 +191,16 @@ export default function AdminPage() {
                     <td>{question.title}</td>
                     <td>{question.question}</td>
                     <td>
-                      <button
-                        onClick={() => handleEdit(question)}
-                        className="btn btn-sm btn-info mr-2"
-                      >
-                        Edit
-                      </button>
+                      {question.answers.map((answer, i) => (
+                        <div
+                          key={i}
+                          className={answer.correct ? "text-green-500" : ""}
+                        >
+                          {answer.title} {answer.correct ? "(Correct)" : ""}
+                        </div>
+                      ))}
+                    </td>
+                    <td>
                       <button
                         onClick={() => handleDelete(question.id)}
                         className="btn btn-sm btn-error"
