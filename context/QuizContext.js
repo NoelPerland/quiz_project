@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
-export const QuestionsContext = createContext();
+export const QuizContext = createContext();
 
 const startingQuestions = [
   {
@@ -55,49 +55,46 @@ const startingQuestions = [
   },
 ];
 
-export default function PortfolioProvider({ children }) {
+export default function QuizProvider({ children }) {
   const [questions, setQuestions] = useState(startingQuestions);
 
   useEffect(() => {
-    const storedProjects = localStorage.getItem("projects");
-    if (storedProjects && JSON.parse(storedProjects).length > 0) {
-      setProjects(JSON.parse(storedProjects));
+    const storedQuestions = localStorage.getItem("questions");
+    if (storedQuestions && JSON.parse(storedQuestions).length > 0) {
+      setQuestions(JSON.parse(storedQuestions));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("projects", JSON.stringify(projects));
-  }, [projects]);
+    localStorage.setItem("questions", JSON.stringify(questions));
+  }, [questions]);
 
-  function addProject(project) {
-    setProjects([...projects, project]);
+  function addQuestion(question) {
+    setQuestions([...questions, question]);
   }
 
-  function updateProject(updatedProject) {
-    setProjects(
-      projects.map((project) =>
-        project.id === updatedProject.id ? updatedProject : project
+  function updateQuestion(updatedQuestion) {
+    setQuestions(
+      questions.map((question) =>
+        question.id === updatedQuestion.id ? updatedQuestion : question
       )
     );
   }
 
-  function deleteProject(id) {
-    setProjects(projects.filter((project) => project.id !== id));
+  function deleteQuestion(id) {
+    setQuestions(questions.filter((question) => question.id !== id));
   }
 
   return (
-    <PortfolioContext.Provider
+    <QuizContext.Provider
       value={{
-        projects,
-        addProject,
-        updateProject,
-        deleteProject,
-        techSkills,
-        addTechSkill,
-        deleteTechSkill,
+        questions,
+        addQuestion,
+        updateQuestion,
+        deleteQuestion,
       }}
     >
       {children}
-    </PortfolioContext.Provider>
+    </QuizContext.Provider>
   );
 }
