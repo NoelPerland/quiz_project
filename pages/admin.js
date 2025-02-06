@@ -79,30 +79,36 @@ export default function AdminPage() {
 
   if (!loggedIn) {
     return (
-      <div className="mx-auto max-w-sm p-4">
+      <div className="mx-auto max-w-sm p-4 py-28">
         <h2 className="text-2xl font-bold mb-4 text-center">Admin Login</h2>
+
         <div className="form-control mb-4">
-          <label className="label">Username</label>
+          <label className="label text-gray-600 font-medium">Username</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="input input-bordered"
+            className="input input-bordered focus:ring focus:ring-primary focus:outline-none transition duration-200"
             placeholder="Username"
           />
         </div>
+
         <div className="form-control mb-4">
-          <label className="label">Password</label>
+          <label className="label text-gray-600 font-medium">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="input input-bordered"
+            className="input input-bordered focus:ring focus:ring-primary focus:outline-none transition duration-200"
             placeholder="Password"
             onKeyDown={keyDown}
           />
         </div>
-        <button onClick={handleLogin} className="btn btn-primary w-full">
+
+        <button
+          onClick={handleLogin}
+          className="btn btn-primary w-full hover:scale-105 active:scale-95 transition duration-200"
+        >
           Log In
         </button>
       </div>
