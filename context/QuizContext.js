@@ -4,53 +4,107 @@ export const QuizContext = createContext();
 
 const startingQuestions = [
   {
-    id: "1",
-    title: "Fråga 1",
-    question: "Vilket är världens största djur?",
+    id: "0",
+    title: "Question 1",
+    question: "Which language is primarily used for web development?",
     answers: [
-      { title: "Elefant", correct: false },
-      { title: "Blåval", correct: true },
-      { title: "Giraff", correct: false },
+      { title: "Python", correct: false },
+      { title: "JavaScript", correct: true },
+      { title: "C++", correct: false },
+    ],
+  },
+  {
+    id: "1",
+    title: "Question 2",
+    question: "What does HTML stand for?",
+    answers: [
+      { title: "HyperText Markup Language", correct: true },
+      { title: "Hyperlink and Text Management Language", correct: false },
+      { title: "High-Level Text Management Language", correct: false },
     ],
   },
   {
     id: "2",
-    title: "Fråga 2",
-    question: "Vilket land har flest invånare?",
+    title: "Question 3",
+    question: "Which of the following is a version control system?",
     answers: [
-      { title: "USA", correct: false },
-      { title: "Kina", correct: true },
-      { title: "Indien", correct: false },
+      { title: "Git", correct: true },
+      { title: "Docker", correct: false },
+      { title: "Nginx", correct: false },
     ],
   },
   {
     id: "3",
-    title: "Fråga 3",
-    question: "Vilket grundämne har kemiska beteckningen 'O'?",
+    title: "Question 4",
+    question:
+      "Which JavaScript **library** is developed by Meta (formerly Facebook)?",
     answers: [
-      { title: "Syre", correct: true },
-      { title: "Guld", correct: false },
-      { title: "Väte", correct: false },
+      { title: "Angular", correct: false },
+      { title: "Vue", correct: false },
+      { title: "React", correct: true },
     ],
   },
   {
     id: "4",
-    title: "Fråga 4",
-    question: "Vilken planet är närmast solen?",
+    title: "Question 5",
+    question: "What is the primary purpose of CSS?",
     answers: [
-      { title: "Mars", correct: false },
-      { title: "Jorden", correct: false },
-      { title: "Merkurius", correct: true },
+      { title: "To define the structure of a webpage", correct: false },
+      { title: "To style and layout web pages", correct: true },
+      { title: "To handle server-side logic", correct: false },
     ],
   },
   {
     id: "5",
-    title: "Fråga 5",
-    question: "Vad heter huvudstaden i Brasilien?",
+    title: "Question 6",
+    question:
+      "Which keyword(s) can be used to declare a variable in JavaScript?",
     answers: [
-      { title: "Rio de Janeiro", correct: false },
-      { title: "São Paulo", correct: false },
-      { title: "Brasília", correct: true },
+      { title: "var, let, or const", correct: true },
+      { title: "define", correct: false },
+      { title: "declare", correct: false },
+    ],
+  },
+  {
+    id: "6",
+    title: "Question 7",
+    question:
+      "Which of the following is a relational database management system (RDBMS)?",
+    answers: [
+      { title: "MongoDB", correct: false },
+      { title: "MySQL", correct: true },
+      { title: "Redis", correct: false },
+    ],
+  },
+  {
+    id: "7",
+    title: "Question 8",
+    question: "What does the acronym API stand for?",
+    answers: [
+      { title: "Automated Program Integration", correct: false },
+      { title: "Application Programming Interface", correct: true },
+      { title: "Advanced Processing Instruction", correct: false },
+    ],
+  },
+  {
+    id: "8",
+    title: "Question 9",
+    question:
+      "Which of the following is **not** a recognized programming paradigm?",
+    answers: [
+      { title: "Functional Programming", correct: false },
+      { title: "Object-Oriented Programming", correct: false },
+      { title: "Blockchain Programming", correct: true },
+    ],
+  },
+  {
+    id: "9",
+    title: "Question 10",
+    question: "What is the primary purpose of Node.js?",
+    answers: [
+      { title: "To run JavaScript on the server-side", correct: true },
+      { title: "To style web pages", correct: false },
+      { title: "To manage databases", correct: false },
     ],
   },
 ];
