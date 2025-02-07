@@ -24,6 +24,9 @@ export default {
       "dracula",
       "luxury",
       "coffee",
+      "valentine",
+      "lemonade",
+      "garden",
     ],
   },
 };

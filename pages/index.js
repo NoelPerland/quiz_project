@@ -29,25 +29,26 @@ export default function Home() {
     <div className="min-h-screen flex flex-col items-center justify-center px-6">
       <Navbar /> {/* Use Navbar here */}
       {/* Hero Section */}
-      <section className="text-center max-w-3xl mt-20">
-        <h1 className="text-4xl font-bold sm:text-5xl">
-          Test Your Knowledge with <span>Quix</span>
-        </h1>
-        <p className="mt-4 text-lg">
-          Challenge yourself with fun and interactive quizzes. Learn, compete,
-          and improve your skills.
-        </p>
-        {!started && (
+      {!started && (
+        <section className="text-center max-w-3xl mt-20">
+          <h1 className="text-4xl font-bold sm:text-5xl">
+            Test Your Knowledge with <span>Quix</span>
+          </h1>
+          <p className="mt-4 text-lg">
+            Challenge yourself with fun and interactive quizzes. Learn, compete,
+            and improve your skills.
+          </p>
+
           <Link href="#quiz">
             <button
               onClick={() => setStarted(true)}
-              className="btn btn-primary mt-6 px-6 py-3 font-semibold rounded-lg shadow-md transition"
+              className="btn btn-secondary mt-6 px-6 py-3 font-semibold rounded-lg shadow-md transition"
             >
               Start Quiz
             </button>
           </Link>
-        )}
-      </section>
+        </section>
+      )}
       {/* Quiz Section */}
       {started && questions.length > 0 && (
         <section className="h-96" id="quiz">

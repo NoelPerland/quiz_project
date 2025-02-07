@@ -169,7 +169,7 @@ export default function AdminPage() {
             ))}
           </div>
 
-          <button type="submit" className="btn btn-primary w-full">
+          <button type="submit" className="btn btn-secondary w-full">
             Add Question
           </button>
         </form>
