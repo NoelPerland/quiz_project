@@ -3,6 +3,7 @@ import Navbar from "./Navbar"; // Import Navbar
 import { useContext, useState } from "react";
 import { QuizContext } from "@/context/QuizContext";
 import QuizCard from "@/components/QuizCard"; // Correct import
+import { RiRefreshLine } from "react-icons/ri";
 
 export default function Home() {
   const { questions } = useContext(QuizContext);
@@ -64,9 +65,18 @@ export default function Home() {
               </button>
             )}
             {answered && currentQuestionIndex === questions.length - 1 && (
-              <p>
-                Quiz Complete! {score} / {questions.length}
-              </p>
+              <div>
+                <p>
+                  Quiz Complete! {score} / {questions.length}
+                </p>
+
+                {/* Start Over button */}
+                <a href="/" className="inline-block mt-4">
+                  <button className="btn btn-secondary">
+                    Start Over <RiRefreshLine className=" w-5 h-5" />{" "}
+                  </button>
+                </a>
+              </div>
             )}
           </div>
         </section>
