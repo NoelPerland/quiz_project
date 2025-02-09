@@ -37,7 +37,7 @@ const startingQuestions = [
     id: "3",
     title: "Question 4",
     question:
-      "Which JavaScript **library** is developed by Meta (formerly Facebook)?",
+      "Which JavaScript library is developed by Meta (formerly Facebook)?",
     answers: [
       { title: "Angular", correct: false },
       { title: "Vue", correct: false },

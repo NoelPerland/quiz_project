@@ -7,7 +7,8 @@ export default function AdminPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { questions, addQuestion, deleteQuestion } = useContext(QuizContext);
+  const { questions, addQuestion, updateQuestion, deleteQuestion } =
+    useContext(QuizContext);
 
   const [questionForm, setQuestionForm] = useState({
     id: "",
@@ -59,8 +60,12 @@ export default function AdminPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const newQuestion = { ...questionForm, id: Date.now().toString() };
-    addQuestion(newQuestion);
+    if (questionForm.id) {
+      updateQuestion(questionForm);
+    } else {
+      const newQuestion = { ...questionForm, id: Date.now().toString() };
+      addQuestion(newQuestion);
+    }
     setQuestionForm({
       id: "",
       title: "",
@@ -71,6 +76,10 @@ export default function AdminPage() {
         { title: "", correct: false },
       ],
     });
+  }
+
+  function handleEdit(question) {
+    setQuestionForm(question);
   }
 
   function handleDelete(id) {
@@ -170,7 +179,7 @@ export default function AdminPage() {
           </div>
 
           <button type="submit" className="btn btn-secondary w-full">
-            Add Question
+            {questionForm.id ? "Update Question" : "Add Question"}
           </button>
         </form>
 
@@ -207,6 +216,12 @@ export default function AdminPage() {
                       ))}
                     </td>
                     <td>
+                      <button
+                        onClick={() => handleEdit(question)}
+                        className="btn btn-sm btn-info mr-2"
+                      >
+                        Edit
+                      </button>
                       <button
                         onClick={() => handleDelete(question.id)}
                         className="btn btn-sm btn-error"
