@@ -20,9 +20,11 @@ export default function QuizCard({
   }
 
   return (
-    <div className="card bg-base-300 shadow-xl">
+    <div className="card bg-base-300 shadow-xl border-accent border-2">
       <div className="card-body">
-        Question {currentIndex + 1} / {totalQuestions}
+        <p>
+          Question {currentIndex + 1} / {totalQuestions}
+        </p>
         <h3 className="card-title text-xl mx-auto font-semibold">
           {question.question}
         </h3>
@@ -34,9 +36,9 @@ export default function QuizCard({
               className={`btn w-full p-2 transition ${
                 isAnswered
                   ? answer.correct
-                    ? "bg-green-600 hover:bg-green-600 border-none text-white font-bold"
+                    ? "bg-green-700 hover:bg-green-700 border-none text-white font-bold"
                     : selectedAnswer === answer
-                    ? "bg-red-600 hover:bg-red-600 border-none text-white"
+                    ? "bg-red-700 hover:bg-red-700 border-none text-white"
                     : "bg-gray-200"
                   : "hover:bg-gray-300"
               }`}

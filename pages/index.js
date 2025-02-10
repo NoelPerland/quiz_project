@@ -24,6 +24,12 @@ export default function Home() {
     setAnswered(false);
   };
 
+  function restartQuiz() {
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setAnswered(false);
+  }
+
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center px-6  bg-gradient-to-b
@@ -58,7 +64,7 @@ export default function Home() {
             totalQuestions={questions.length}
             onAnswerSelected={handleAnswerSelected}
           />
-          <div className="mt-6 flex justify-center">
+          <div className="mt-6 flex justify-center min-h-[50px]">
             {answered && currentQuestionIndex < questions.length - 1 && (
               <button onClick={nextQuestion} className="btn btn-accent">
                 Next
@@ -67,13 +73,25 @@ export default function Home() {
             {answered && currentQuestionIndex === questions.length - 1 && (
               <div className="text-center">
                 <p className="text-2xl font-bold mb-8">
-                  Quiz Complete! {score} / {questions.length}
+                  Quiz Complete! You scored{" "}
+                  <span className="text-primary">{score}</span> /{" "}
+                  {questions.length}.
+                  <br />
+                  {score === questions.length
+                    ? "🥇 Perfect score! You're a quiz master! 🚀"
+                    : score >= questions.length * 0.7
+                    ? "🔥 Awesome job! Keep it up!"
+                    : score >= questions.length * 0.4
+                    ? "👍 Not bad! Keep practicing!"
+                    : "💡 Keep learning! You'll do better next time!"}
                 </p>
-                <a href="/" className="inline-block mt-4">
-                  <button className="btn btn-accent flex items-center gap-2 text-base">
-                    Start Over <RiRefreshLine className="w-12 h-8" />
-                  </button>
-                </a>
+
+                <button
+                  onClick={restartQuiz}
+                  className="btn btn-accent flex items-center gap-2 text-base mx-auto"
+                >
+                  Start Over <RiRefreshLine className="w-12 h-8" />
+                </button>
               </div>
             )}
           </div>
