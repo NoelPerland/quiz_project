@@ -6,6 +6,7 @@ export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [questionToDelete, setQuestionToDelete] = useState(null);
 
   const { questions, addQuestion, updateQuestion, deleteQuestion } =
     useContext(QuizContext);
@@ -82,8 +83,15 @@ export default function AdminPage() {
     setQuestionForm(question);
   }
 
-  function handleDelete(id) {
-    deleteQuestion(id);
+  function confirmDelete(id) {
+    setQuestionToDelete(id);
+  }
+
+  function handleConfirmDelete() {
+    if (questionToDelete) {
+      deleteQuestion(questionToDelete);
+      setQuestionToDelete(null);
+    }
   }
 
   if (!loggedIn) {
@@ -127,7 +135,7 @@ export default function AdminPage() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto p-4">
+      <div id="container" className="container mx-auto p-4">
         <h2 className="text-3xl font-bold mb-4 text-center">Questions</h2>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-8">
@@ -216,14 +224,16 @@ export default function AdminPage() {
                       ))}
                     </td>
                     <td>
+                      <a href="#container">
+                        <button
+                          onClick={() => handleEdit(question)}
+                          className="btn btn-sm btn-info mr-2"
+                        >
+                          Edit
+                        </button>
+                      </a>
                       <button
-                        onClick={() => handleEdit(question)}
-                        className="btn btn-sm btn-info mr-2"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(question.id)}
+                        onClick={() => setQuestionToDelete(question.id)}
                         className="btn btn-sm btn-error"
                       >
                         Delete
@@ -236,6 +246,32 @@ export default function AdminPage() {
           </table>
         </div>
       </div>
+
+      {questionToDelete && (
+        <dialog id="deleteModal" className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="text-lg font-semibold">Are you sure?</h3>
+            <p className="py-4">Do you really want to delete this question?</p>
+            <div className="modal-action">
+              <button
+                onClick={() => setQuestionToDelete(null)}
+                className="btn btn-secondary"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  deleteQuestion(questionToDelete);
+                  setQuestionToDelete(null);
+                }}
+                className="btn btn-error"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </dialog>
+      )}
     </>
   );
 }
