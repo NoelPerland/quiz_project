@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Navbar from "./Navbar"; // Import Navbar
+import Navbar from "./Navbar";
 import { useContext, useState } from "react";
 import { QuizContext } from "@/context/QuizContext";
-import QuizCard from "@/components/QuizCard"; // Correct import
+import QuizCard from "@/components/QuizCard";
 import { RiRefreshLine } from "react-icons/ri";
 
 export default function Home() {
@@ -12,7 +12,6 @@ export default function Home() {
   const [answered, setAnswered] = useState(false);
   const [score, setScore] = useState(0);
 
-  // Called when the user selects an answer in QuizCard
   const handleAnswerSelected = (answer) => {
     if (answer.correct) {
       setScore(score + 1);
@@ -20,39 +19,38 @@ export default function Home() {
     setAnswered(true);
   };
 
-  // Advance to the next question
   const nextQuestion = () => {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     setAnswered(false);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6">
+    <div
+      className="min-h-screen flex flex-col items-center justify-center px-6  bg-gradient-to-b
+     from-green-200 via-base-200 to-green-200 text-base-content"
+    >
       <Navbar />
-      {/* Hero Section */}
       {!started && (
-        <section className="text-center max-w-3xl mt-20">
+        <section className="text-center max-w-3xl mt-20 p-6">
           <h1 className="text-4xl font-bold sm:text-5xl">
-            Test Your Knowledge with <span>Quix</span>
+            Test Your Knowledge with <span className="text-accent">Quix</span>
+            <span>!</span>
           </h1>
-          <p className="mt-4 text-lg">
+          <p className="mt-4 text-lg opacity-80">
             Challenge yourself with fun and interactive quizzes. Learn, compete,
             and improve your skills.
           </p>
-
-          <Link href="#quiz">
-            <button
-              onClick={() => setStarted(true)}
-              className="btn btn-secondary mt-6 px-6 py-3 font-semibold rounded-lg shadow-md transition"
-            >
-              Start Quiz
-            </button>
-          </Link>
+          <button
+            onClick={() => setStarted(true)}
+            className="btn btn-accent
+             mt-6 px-6 py-3 font-semibold rounded-lg transition hover:opacity-80"
+          >
+            Start Quiz
+          </button>
         </section>
       )}
-      {/* Quiz Section */}
       {started && questions.length > 0 && (
-        <section className="h-96" id="quiz">
+        <section className="w-full max-w-2xl mt-10" id="quiz">
           <QuizCard
             key={questions[currentQuestionIndex].id}
             question={questions[currentQuestionIndex]}
@@ -60,22 +58,20 @@ export default function Home() {
             totalQuestions={questions.length}
             onAnswerSelected={handleAnswerSelected}
           />
-          <div className="mt-4 text-center">
+          <div className="mt-6 flex justify-center">
             {answered && currentQuestionIndex < questions.length - 1 && (
-              <button onClick={nextQuestion} className="btn">
+              <button onClick={nextQuestion} className="btn btn-accent">
                 Next
               </button>
             )}
             {answered && currentQuestionIndex === questions.length - 1 && (
-              <div>
-                <p>
+              <div className="text-center">
+                <p className="text-lg font-medium">
                   Quiz Complete! {score} / {questions.length}
                 </p>
-
-                {/* Start Over button */}
                 <a href="/" className="inline-block mt-4">
-                  <button className="btn btn-secondary">
-                    Start Over <RiRefreshLine className=" w-5 h-5" />
+                  <button className="btn btn-accent flex items-center gap-2">
+                    Start Over <RiRefreshLine className="w-5 h-5" />
                   </button>
                 </a>
               </div>
