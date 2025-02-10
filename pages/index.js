@@ -66,12 +66,12 @@ export default function Home() {
             )}
             {answered && currentQuestionIndex === questions.length - 1 && (
               <div className="text-center">
-                <p className="text-lg font-medium">
+                <p className="text-2xl font-bold mb-8">
                   Quiz Complete! {score} / {questions.length}
                 </p>
                 <a href="/" className="inline-block mt-4">
-                  <button className="btn btn-accent flex items-center gap-2">
-                    Start Over <RiRefreshLine className="w-5 h-5" />
+                  <button className="btn btn-accent flex items-center gap-2 text-base">
+                    Start Over <RiRefreshLine className="w-12 h-8" />
                   </button>
                 </a>
               </div>
