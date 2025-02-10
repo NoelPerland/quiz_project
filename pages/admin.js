@@ -96,41 +96,38 @@ export default function AdminPage() {
 
   if (!loggedIn) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-green-200 via-base-200 to-green-200 text-base-content">
-        <div className="mx-auto max-w-sm p-4 py-28  ">
-          <h2 className="text-2xl font-bold mb-4 text-center">Admin Login</h2>
+      <div className="mx-auto max-w-sm p-4 py-28">
+        <h2 className="text-2xl font-bold mb-4 text-center">Admin Login</h2>
 
-          <div className="form-control mb-4">
-            <label className="label text-gray-600 font-medium">Username</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="input input-bordered focus:ring focus:ring-accent focus:outline-none transition duration-200"
-              placeholder="Username"
-            />
-          </div>
-
-          <div className="form-control mb-4 ">
-            <label className="label text-gray-600 font-medium">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input input-bordered focus:ring focus:ring-accent
-               focus:outline-none transition duration-200"
-              placeholder="Password"
-              onKeyDown={keyDown}
-            />
-          </div>
-
-          <button
-            onClick={handleLogin}
-            className="btn btn-accent w-full hover:scale-105 active:scale-95 transition duration-200"
-          >
-            Log In
-          </button>
+        <div className="form-control mb-4">
+          <label className="label text-gray-600 font-medium">Username</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="input input-bordered focus:ring focus:ring-primary focus:outline-none transition duration-200"
+            placeholder="Username"
+          />
         </div>
+
+        <div className="form-control mb-4">
+          <label className="label text-gray-600 font-medium">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input input-bordered focus:ring focus:ring-primary focus:outline-none transition duration-200"
+            placeholder="Password"
+            onKeyDown={keyDown}
+          />
+        </div>
+
+        <button
+          onClick={handleLogin}
+          className="btn btn-primary w-full hover:scale-105 active:scale-95 transition duration-200"
+        >
+          Log In
+        </button>
       </div>
     );
   }
@@ -138,29 +135,29 @@ export default function AdminPage() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto p-4">
+      <div id="container" className="container mx-auto p-4">
         <h2 className="text-3xl font-bold mb-4 text-center">Questions</h2>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-8">
-          <div className="form-control mt-12 mb-6">
-            <label className="label ">Title</label>
+          <div className="form-control mb-4">
+            <label className="label">Title</label>
             <input
               type="text"
               name="title"
               value={questionForm.title}
               onChange={handleChange}
-              className="input input-bordered focus:ring focus:ring-accent focus:outline-none transition duration-200"
+              className="input input-bordered"
               required
             />
           </div>
 
-          <div className="form-control mb-4 ">
+          <div className="form-control mb-4">
             <label className="label">Question</label>
             <textarea
               name="question"
               value={questionForm.question}
               onChange={handleChange}
-              className="textarea textarea-bordered  focus:ring focus:ring-accent focus:outline-none transition duration-200"
+              className="textarea textarea-bordered"
               required
             ></textarea>
           </div>
@@ -173,7 +170,7 @@ export default function AdminPage() {
                   type="text"
                   value={answer.title}
                   onChange={(e) => handleAnswerChange(index, e.target.value)}
-                  className="input input-bordered flex-1 focus:ring focus:ring-accent focus:outline-none transition duration-200"
+                  className="input input-bordered flex-1"
                   placeholder={`Answer ${index + 1}`}
                   required
                 />
@@ -189,11 +186,7 @@ export default function AdminPage() {
             ))}
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-accent
-           w-full"
-          >
+          <button type="submit" className="btn btn-secondary w-full">
             {questionForm.id ? "Update Question" : "Add Question"}
           </button>
         </form>
@@ -231,14 +224,16 @@ export default function AdminPage() {
                       ))}
                     </td>
                     <td>
+                      <a href="#container">
+                        <button
+                          onClick={() => handleEdit(question)}
+                          className="btn btn-sm btn-info mr-2"
+                        >
+                          Edit
+                        </button>
+                      </a>
                       <button
-                        onClick={() => handleEdit(question)}
-                        className="btn btn-sm btn-info mr-2"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(question.id)}
+                        onClick={() => confirmDelete(question.id)}
                         className="btn btn-sm btn-error"
                       >
                         Delete
