@@ -137,7 +137,10 @@ export default function AdminPage() {
   return (
     <>
       <Navbar />
-      <div className="bg-gradient-to-b from-green-200 via-base-200 to-green-200">
+      <div
+        id="container"
+        className="bg-gradient-to-b from-green-200 via-base-200 to-green-200"
+      >
         <h2 className="text-3xl font-bold mb-4 text-center">Questions</h2>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-8">
@@ -231,12 +234,14 @@ export default function AdminPage() {
                         ))}
                       </td>
                       <td>
-                        <button
-                          onClick={() => handleEdit(question)}
-                          className="btn btn-sm btn-info mr-2"
-                        >
-                          Edit
-                        </button>
+                        <a href="#container">
+                          <button
+                            onClick={() => handleEdit(question)}
+                            className="btn btn-sm btn-info mr-2"
+                          >
+                            Edit
+                          </button>
+                        </a>
                         <button
                           onClick={() => confirmDelete(question.id)}
                           className="btn btn-sm btn-error"
