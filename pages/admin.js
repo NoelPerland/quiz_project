@@ -143,7 +143,7 @@ export default function AdminPage() {
       >
         <h2 className="text-3xl font-bold mb-4 text-center">Questions</h2>
 
-        <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-8">
+        <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-8 px-5">
           <div className="form-control mt-12 mb-6">
             <label className="label ">Title</label>
             <input
@@ -200,7 +200,7 @@ export default function AdminPage() {
           </button>
         </form>
 
-        <div className="container mx-auto p-4  ">
+        <div className="container mx-auto pb-4">
           <div className="overflow-x-auto mb-12">
             <table className="table w-full">
               <thead>
