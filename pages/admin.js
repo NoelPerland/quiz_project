@@ -6,6 +6,7 @@ export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [questionToDelete, setQuestionToDelete] = useState(null);
 
   const { questions, addQuestion, updateQuestion, deleteQuestion } =
     useContext(QuizContext);
@@ -82,8 +83,15 @@ export default function AdminPage() {
     setQuestionForm(question);
   }
 
-  function handleDelete(id) {
-    deleteQuestion(id);
+  function confirmDelete(id) {
+    setQuestionToDelete(id);
+  }
+
+  function handleConfirmDelete() {
+    if (questionToDelete) {
+      deleteQuestion(questionToDelete);
+      setQuestionToDelete(null);
+    }
   }
 
   if (!loggedIn) {
@@ -130,7 +138,7 @@ export default function AdminPage() {
   return (
     <>
       <Navbar />
-      <div className="bg-gradient-to-b from-green-200 via-base-200 to-green-200">
+      <div className="container mx-auto p-4">
         <h2 className="text-3xl font-bold mb-4 text-center">Questions</h2>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-8">
@@ -190,61 +198,85 @@ export default function AdminPage() {
           </button>
         </form>
 
-        <div className="container mx-auto p-4  ">
-          <div className="overflow-x-auto mb-12">
-            <table className="table w-full">
-              <thead>
+        <div className="overflow-x-auto mb-12">
+          <table className="table w-full">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Question</th>
+                <th>Answers</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {questions.length === 0 ? (
                 <tr>
-                  <th>Title</th>
-                  <th>Question</th>
-                  <th>Answers</th>
-                  <th>Actions</th>
+                  <td colSpan="4" className="text-center">
+                    No questions available.
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {questions.length === 0 ? (
-                  <tr>
-                    <td colSpan="4" className="text-center">
-                      No questions available.
+              ) : (
+                questions.map((question) => (
+                  <tr key={question.id}>
+                    <td>{question.title}</td>
+                    <td>{question.question}</td>
+                    <td>
+                      {question.answers.map((answer, i) => (
+                        <div
+                          key={i}
+                          className={answer.correct ? "text-green-500" : ""}
+                        >
+                          {answer.title} {answer.correct ? "(Correct)" : ""}
+                        </div>
+                      ))}
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => handleEdit(question)}
+                        className="btn btn-sm btn-info mr-2"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(question.id)}
+                        className="btn btn-sm btn-error"
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
-                ) : (
-                  questions.map((question) => (
-                    <tr key={question.id}>
-                      <td>{question.title}</td>
-                      <td>{question.question}</td>
-                      <td>
-                        {question.answers.map((answer, i) => (
-                          <div
-                            key={i}
-                            className={answer.correct ? "text-green-500" : ""}
-                          >
-                            {answer.title} {answer.correct ? "(Correct)" : ""}
-                          </div>
-                        ))}
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => handleEdit(question)}
-                          className="btn btn-sm btn-info mr-2"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(question.id)}
-                          className="btn btn-sm btn-error"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
+
+      {questionToDelete && (
+        <dialog id="deleteModal" className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="text-lg font-semibold">Are you sure?</h3>
+            <p className="py-4">Do you really want to delete this question?</p>
+            <div className="modal-action">
+              <button
+                onClick={() => setQuestionToDelete(null)}
+                className="btn btn-secondary"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  deleteQuestion(questionToDelete);
+                  setQuestionToDelete(null);
+                }}
+                className="btn btn-error"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </dialog>
+      )}
     </>
   );
 }
