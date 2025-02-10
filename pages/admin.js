@@ -82,7 +82,6 @@ export default function AdminPage() {
   function handleEdit(question) {
     setQuestionForm(question);
   }
-
   function confirmDelete(id) {
     setQuestionToDelete(id);
   }
@@ -96,38 +95,41 @@ export default function AdminPage() {
 
   if (!loggedIn) {
     return (
-      <div className="mx-auto max-w-sm p-4 py-28">
-        <h2 className="text-2xl font-bold mb-4 text-center">Admin Login</h2>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-green-200 via-base-200 to-green-200 text-base-content">
+        <div className="mx-auto max-w-sm p-4 py-28  ">
+          <h2 className="text-2xl font-bold mb-4 text-center">Admin Login</h2>
 
-        <div className="form-control mb-4">
-          <label className="label text-gray-600 font-medium">Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="input input-bordered focus:ring focus:ring-primary focus:outline-none transition duration-200"
-            placeholder="Username"
-          />
+          <div className="form-control mb-4">
+            <label className="label text-gray-600 font-medium">Username</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="input input-bordered focus:ring focus:ring-accent focus:outline-none transition duration-200"
+              placeholder="Username"
+            />
+          </div>
+
+          <div className="form-control mb-4 ">
+            <label className="label text-gray-600 font-medium">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input input-bordered focus:ring focus:ring-accent
+               focus:outline-none transition duration-200"
+              placeholder="Password"
+              onKeyDown={keyDown}
+            />
+          </div>
+
+          <button
+            onClick={handleLogin}
+            className="btn btn-accent w-full hover:scale-105 active:scale-95 transition duration-200"
+          >
+            Log In
+          </button>
         </div>
-
-        <div className="form-control mb-4">
-          <label className="label text-gray-600 font-medium">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="input input-bordered focus:ring focus:ring-primary focus:outline-none transition duration-200"
-            placeholder="Password"
-            onKeyDown={keyDown}
-          />
-        </div>
-
-        <button
-          onClick={handleLogin}
-          className="btn btn-primary w-full hover:scale-105 active:scale-95 transition duration-200"
-        >
-          Log In
-        </button>
       </div>
     );
   }
@@ -135,29 +137,29 @@ export default function AdminPage() {
   return (
     <>
       <Navbar />
-      <div id="container" className="container mx-auto p-4">
+      <div className="bg-gradient-to-b from-green-200 via-base-200 to-green-200">
         <h2 className="text-3xl font-bold mb-4 text-center">Questions</h2>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-8">
-          <div className="form-control mb-4">
-            <label className="label">Title</label>
+          <div className="form-control mt-12 mb-6">
+            <label className="label ">Title</label>
             <input
               type="text"
               name="title"
               value={questionForm.title}
               onChange={handleChange}
-              className="input input-bordered"
+              className="input input-bordered focus:ring focus:ring-accent focus:outline-none transition duration-200"
               required
             />
           </div>
 
-          <div className="form-control mb-4">
+          <div className="form-control mb-4 ">
             <label className="label">Question</label>
             <textarea
               name="question"
               value={questionForm.question}
               onChange={handleChange}
-              className="textarea textarea-bordered"
+              className="textarea textarea-bordered  focus:ring focus:ring-accent focus:outline-none transition duration-200"
               required
             ></textarea>
           </div>
@@ -170,7 +172,7 @@ export default function AdminPage() {
                   type="text"
                   value={answer.title}
                   onChange={(e) => handleAnswerChange(index, e.target.value)}
-                  className="input input-bordered flex-1"
+                  className="input input-bordered flex-1 focus:ring focus:ring-accent focus:outline-none transition duration-200"
                   placeholder={`Answer ${index + 1}`}
                   required
                 />
@@ -186,67 +188,70 @@ export default function AdminPage() {
             ))}
           </div>
 
-          <button type="submit" className="btn btn-secondary w-full">
+          <button
+            type="submit"
+            className="btn btn-accent
+           w-full"
+          >
             {questionForm.id ? "Update Question" : "Add Question"}
           </button>
         </form>
 
-        <div className="overflow-x-auto mb-12">
-          <table className="table w-full">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Question</th>
-                <th>Answers</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {questions.length === 0 ? (
+        <div className="container mx-auto p-4  ">
+          <div className="overflow-x-auto mb-12">
+            <table className="table w-full">
+              <thead>
                 <tr>
-                  <td colSpan="4" className="text-center">
-                    No questions available.
-                  </td>
+                  <th>Title</th>
+                  <th>Question</th>
+                  <th>Answers</th>
+                  <th>Actions</th>
                 </tr>
-              ) : (
-                questions.map((question) => (
-                  <tr key={question.id}>
-                    <td>{question.title}</td>
-                    <td>{question.question}</td>
-                    <td>
-                      {question.answers.map((answer, i) => (
-                        <div
-                          key={i}
-                          className={answer.correct ? "text-green-500" : ""}
-                        >
-                          {answer.title} {answer.correct ? "(Correct)" : ""}
-                        </div>
-                      ))}
+              </thead>
+              <tbody>
+                {questions.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" className="text-center">
+                      No questions available.
                     </td>
-                    <td>
-                      <a href="#container">
+                  </tr>
+                ) : (
+                  questions.map((question) => (
+                    <tr key={question.id}>
+                      <td>{question.title}</td>
+                      <td>{question.question}</td>
+                      <td>
+                        {question.answers.map((answer, i) => (
+                          <div
+                            key={i}
+                            className={answer.correct ? "text-green-500" : ""}
+                          >
+                            {answer.title} {answer.correct ? "(Correct)" : ""}
+                          </div>
+                        ))}
+                      </td>
+                      <td>
                         <button
                           onClick={() => handleEdit(question)}
                           className="btn btn-sm btn-info mr-2"
                         >
                           Edit
                         </button>
-                      </a>
-                      <button
-                        onClick={() => confirmDelete(question.id)}
-                        className="btn btn-sm btn-error"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                        <button
+                          onClick={() => confirmDelete(question.id)}
+                          className="btn btn-sm btn-error"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
       {questionToDelete && (
         <dialog id="deleteModal" className="modal modal-open">
           <div className="modal-box">
@@ -255,17 +260,11 @@ export default function AdminPage() {
             <div className="modal-action">
               <button
                 onClick={() => setQuestionToDelete(null)}
-                className="btn btn-secondary"
+                className="btn btn-accent"
               >
                 Cancel
               </button>
-              <button
-                onClick={() => {
-                  deleteQuestion(questionToDelete);
-                  setQuestionToDelete(null);
-                }}
-                className="btn btn-error"
-              >
+              <button onClick={handleConfirmDelete} className="btn btn-error ">
                 Yes, Delete
               </button>
             </div>
