@@ -1,15 +1,18 @@
 import { useState } from "react";
 
-export default function QuizCard({ question, onAnswerSelected }) {
+export default function QuizCard({
+  question,
+  currentIndex,
+  totalQuestions,
+  onAnswerSelected,
+}) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [score, setScore] = useState(0);
 
   function handleAnswerClick(answer) {
     if (!isAnswered) {
       setSelectedAnswer(answer);
       setIsAnswered(true);
-      // Notify the parent that an answer was selected.
       if (onAnswerSelected) {
         onAnswerSelected(answer);
       }
@@ -18,8 +21,9 @@ export default function QuizCard({ question, onAnswerSelected }) {
 
   return (
     <div className="card bg-base-300 shadow-xl">
-      <div className="card-body text-center">
-        <h3 className="card-title text-xl font-semibold">
+      <div className="card-body">
+        Question {currentIndex + 1} / {totalQuestions}
+        <h3 className="card-title text-xl mx-auto font-semibold">
           {question.question}
         </h3>
         <div className="mt-4 space-y-2">
@@ -29,15 +33,21 @@ export default function QuizCard({ question, onAnswerSelected }) {
               onClick={() => handleAnswerClick(answer)}
               className={`btn w-full p-2 transition ${
                 isAnswered
-                  ? selectedAnswer === answer
-                    ? answer.correct
-                      ? "bg-green-500 hover:bg-green-500 text-white font-bold"
-                      : "bg-red-500 hover:bg-red-500 text-white"
+                  ? answer.correct
+                    ? "bg-green-600 hover:bg-green-600 border-none text-white font-bold"
+                    : selectedAnswer === answer
+                    ? "bg-red-600 hover:bg-red-600 border-none text-white"
                     : "bg-gray-200"
                   : "hover:bg-gray-300"
               }`}
             >
               {answer.title}
+              {isAnswered && selectedAnswer === answer && answer.correct && (
+                <span>✔️</span>
+              )}
+              {isAnswered && selectedAnswer === answer && !answer.correct && (
+                <span>❌</span>
+              )}
             </button>
           ))}
         </div>

@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6">
-      <Navbar /> {/* Use Navbar here */}
+      <Navbar />
       {/* Hero Section */}
       {!started && (
         <section className="text-center max-w-3xl mt-20">
@@ -56,6 +56,8 @@ export default function Home() {
           <QuizCard
             key={questions[currentQuestionIndex].id}
             question={questions[currentQuestionIndex]}
+            currentIndex={currentQuestionIndex}
+            totalQuestions={questions.length}
             onAnswerSelected={handleAnswerSelected}
           />
           <div className="mt-4 text-center">
@@ -73,7 +75,7 @@ export default function Home() {
                 {/* Start Over button */}
                 <a href="/" className="inline-block mt-4">
                   <button className="btn btn-secondary">
-                    Start Over <RiRefreshLine className=" w-5 h-5" />{" "}
+                    Start Over <RiRefreshLine className=" w-5 h-5" />
                   </button>
                 </a>
               </div>
